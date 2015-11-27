@@ -152,6 +152,7 @@ Rectangle {
 	anchors.fill: parent
 
 	Rectangle {
+		id: statusContainer
 		Image {
 			anchors.left: parent.left
 			anchors.leftMargin: 5
@@ -160,11 +161,12 @@ Rectangle {
 			width: 20
 			anchors.verticalCenter: parent.verticalCenter
 		}
-		id: statusContainer
 		anchors.horizontalCenter: parent.horizontalCenter
 		anchors.verticalCenter: parent.verticalCenter
+		anchors.top: statusContainer.bottom
+		anchors.topMargin: 4
 		radius: 3
-		width: 600
+		width: 500
 		height: 25
 		color: "#fcfbfc"
 
@@ -190,6 +192,7 @@ Rectangle {
 		}
 
 		DefaultText {
+			id: status
 			anchors.verticalCenter: parent.verticalCenter
 			anchors.horizontalCenter: parent.horizontalCenter
 			font.family: "sans serif"
@@ -198,7 +201,6 @@ Rectangle {
 			elide: Text.ElideRight
 			maximumLineCount: 1
 			clip: true
-			id: status
 			states: [
 				State {
 					name: "error"
@@ -277,6 +279,7 @@ Rectangle {
 
 		Rectangle
 		{
+			id: goToLine
 			visible: false
 			color: "transparent"
 			width: 40
@@ -284,7 +287,6 @@ Rectangle {
 			anchors.top: parent.top
 			anchors.left: status.right
 			anchors.leftMargin: 30
-			id: goToLine
 			RowLayout
 			{
 				anchors.fill: parent
@@ -333,6 +335,7 @@ Rectangle {
 
 		Rectangle
 		{
+			id: logsContainer
 			InverseMouseArea
 			{
 				id: outsideClick
@@ -342,7 +345,6 @@ Rectangle {
 					logsContainer.toggle();
 				}
 			}
-
 			function toggle()
 			{
 				if (logsContainer.state === "opened")
@@ -360,11 +362,11 @@ Rectangle {
 					move()
 				}
 			}
-
-			id: logsContainer
-			width: 750
+			width: 500
 			anchors.top: statusContainer.bottom
 			anchors.topMargin: 4
+			anchors.horizontalCenter: statusContainer.horizontalCenter
+			anchors.left: statusContainer.left
 			visible: false
 			radius: 10
 
@@ -385,8 +387,8 @@ Rectangle {
 			function move()
 			{
 				var statusGlobalCoord = status.mapToItem(null, 0, 0);
-				logsContainer.x = statusGlobalCoord.x - logPane.contentXPos
-				logsShadow.x = statusGlobalCoord.x - logPane.contentXPos
+				logsContainer.x = statusGlobalCoord.x - logPane.contentXPos + 25
+				logsShadow.x = statusGlobalCoord.x - logPane.contentXPos + 25
 				logsShadow.z = 1
 				logsContainer.z = 2
 				if (Qt.platform.os === "osx")
@@ -408,6 +410,14 @@ Rectangle {
 				{
 					parent.move();
 				}
+				MouseArea
+				{
+					id: insideClick
+					anchors.fill: logPane.logLine
+					onClicked: {
+						logsContainer.toggle()
+					}
+				}
 			}
 
 			states: [
@@ -421,9 +431,8 @@ Rectangle {
 				State {
 					name: "closed";
 					PropertyChanges { target: logsContainer; height: 0; visible: false }
-					PropertyChanges { target: statusContainer; width: 600; height: 30 }
-					PropertyChanges { target: outsideClick; active: false }
 					PropertyChanges { target: logsShadow; height: 0; visible: false }
+					PropertyChanges { target: outsideClick; active: false }
 				}
 			]
 		}

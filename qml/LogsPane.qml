@@ -9,6 +9,8 @@ Rectangle
 	property variant statusPane
 	property variant currentStatus
 	property int contentXPos: logStyle.generic.layout.dateWidth + logStyle.generic.layout.typeWidth - 70
+	property int contentYPos: logStyle.generic.layout.dateTop + 70
+	property variant logLine
 
 	function clear()
 	{
@@ -113,6 +115,7 @@ Rectangle
 					{
 						width: logStyle.generic.layout.dateWidth + logStyle.generic.layout.contentWidth + logStyle.generic.layout.typeWidth
 						height: 30
+						id: logLine
 						color:
 						{
 							var cl;
@@ -128,6 +131,7 @@ Rectangle
 						Component.onCompleted:
 						{
 							logsPane.contentXPos = logContent.x
+							 //if (index === 0) logsPane.logLine = logLine
 						}
 
 						MouseArea
