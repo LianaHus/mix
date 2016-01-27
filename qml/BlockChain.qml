@@ -339,7 +339,7 @@ ColumnLayout {
 		ScenarioButton {
 			id: rebuild
 			text: qsTr("Rebuild Scenario")
-			width: btnWidth
+			width: 32
 			Layout.minimumHeight: 30
 			roundLeft: true
 			roundRight: false
@@ -488,7 +488,7 @@ ColumnLayout {
 			}
 
 			buttonShortcut: ""
-			sourceImg: "qrc:/qml/img/recycleicon@2x.png"
+			sourceImg: "qrc:/qml/img/available_updates.png"
 		}
 
 		DropdownButton
