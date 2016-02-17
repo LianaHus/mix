@@ -9,7 +9,7 @@ include(EthPolicy)
 eth_policy()
 
 # project name and version should be set after cmake_policy CMP0048
-set(PROJECT_VERSION "0.1.0")
+set(PROJECT_VERSION "1.0.0")
 project(mix VERSION ${PROJECT_VERSION})
 
 # Let's find our dependencies
@@ -54,7 +54,7 @@ eth_add_executable(${EXECUTABLE}
 )
 
 eth_use(${EXECUTABLE} REQUIRED Qt::Core Qt::Widgets Qt::WebEngine Eth::ethereum Web3::web3jsonrpc Eth::ethashseal)
-eth_use(${EXECUTABLE} OPTIONAL Solidity)
+eth_use(${EXECUTABLE} OPTIONAL Solidity::solidity)
 
 # eth_install_executable is defined in cmake/EthExecutableHelper.cmake
 eth_install_executable(${EXECUTABLE}

@@ -27,6 +27,7 @@
 #include <QFont>
 #include <QtWebEngine/QtWebEngine>
 #include <libsolidity/interface/Version.h>
+#include <mix/BuildInfo.h>
 #include "CodeModel.h"
 #include "ClientModel.h"
 #include "FileIo.h"
@@ -39,6 +40,8 @@
 
 using namespace dev::mix;
 
+char const* dev::mix::VersionNumber = ETH_PROJECT_VERSION;
+
 ApplicationService::ApplicationService()
 {
 	QtWebEngine::initialize();
@@ -47,6 +50,7 @@ ApplicationService::ApplicationService()
 	m_systemPointSize = f.pointSize();
 	m_solidityVersionNumber = QString(dev::solidity::VersionNumber);
 	m_solidityVersionString = QString::fromStdString(dev::solidity::VersionString);
+	m_qtVersion = QString::fromStdString(qVersion());
 }
 
 MixApplication::MixApplication(int& _argc, char* _argv[]):
@@ -74,7 +78,7 @@ void MixApplication::initialize()
 	setOrganizationName(tr("Ethereum"));
 	setOrganizationDomain(tr("ethereum.org"));
 	setApplicationName(tr("Mix"));
-	setApplicationVersion("0.1");
+	setApplicationVersion(dev::mix::VersionNumber);
 
 	qmlRegisterType<CodeModel>("org.ethereum.qml.CodeModel", 1, 0, "CodeModel");
 	qmlRegisterType<ClientModel>("org.ethereum.qml.ClientModel", 1, 0, "ClientModel");
