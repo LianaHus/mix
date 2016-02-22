@@ -42,7 +42,7 @@ Rectangle {
 	anchors.fill: parent
 	id: root
 
-	property alias rightViewVisible: scenarioExe.visible
+	property alias rightViewVisible: mainSettings.showRightView//scenarioExe.visible
 	property alias webViewVisible: webPreview.visible
 	property alias webView: webPreview
 	property alias projectViewVisible: projectList.visible
@@ -140,6 +140,7 @@ Rectangle {
 		property alias webHeight: webPreview.height
 		property bool runOnProjectLoad: true
 		property int scenarioMinWidth: scenarioMinWidth
+		property bool showRightView: scenarioExe.visible
 	}
 
 
