@@ -330,20 +330,47 @@ ColumnLayout
 					anchors.verticalCenter: parent.verticalCenter
 					Layout.preferredWidth: 30
 					Layout.preferredHeight: 30
+//					property string active: "qrc:/qml/img/bugiconactive.png"
+					property string pressedIcon: "qrc:/qml/img/bugiconpressed.png"
+				//	color: "transparent"
+					checkable: true
 					style: ButtonStyle
 					{
-						id: name
+						id: debugImage
 						label: Image { source: "qrc:/qml/img/bugiconactive.png" }
+						background: Rectangle {
+								   border.width: control.activeFocus ? 5 : 4
+								   border.color: control.pressed ? "gray" : "transparent"
+								   radius: 4
+								   color: control.pressed ? "lightgray" : "transparent"
+							   }
 					}
+
 					TooltipArea {
 						text: qsTr("Debug transaction")
 						anchors.fill: parent
-						onClicked:
+						onPressed:
+						{
+							debugTxButton.style.label = pressedIcon
+						}
+						onReleased:
 						{
 							if (tx.recordIndex !== undefined)
 								clientModel.debugRecord(tx.recordIndex, tx.label);
+					//		debugTxButton.state = "RELEASED"
 						}
 					}
+
+//					states: [
+//						State {
+//							name: "PRESSED"
+//							PropertyChanges { target: debugTxButton; checked: true; }
+//						},
+//						State {
+//							name: "RELEASED"
+//							PropertyChanges { target: debugTxButton; checked: false; }
+//						}
+//					]
 				}
 				Rectangle
 				{
